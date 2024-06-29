@@ -13,7 +13,7 @@ class AuthController {
             const { error } = registerValidator.validate(req.body);
             if (error) {
                 const errors = error.details.map((err) => err.message);
-                return res.status(StatusCodes.BAD_REQUEST).json({ message: errors });
+                return res.status(StatusCodes.BAD_REQUEST).json({ errors });
             }
             // Bước 2  kiểm tra email đã được đăng kí chưa
             const emailExist = await User.findOne({ email });
