@@ -63,7 +63,7 @@ class AuthController {
             }
 
             // Bước 4 tạo token
-            const token = jwt.sign({ id: checkUser._id }, "token", { expiresIn: "2h" });
+            const token = jwt.sign(checkUser, "token", { expiresIn: "2h" });
 
             // Bước 5 đăng nhập
             res.status(StatusCodes.OK).json({
