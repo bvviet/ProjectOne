@@ -9,7 +9,7 @@ class AuthController {
     async getDetailUser(req, res) {
         try {
             const userId = req.params.id;
-            const user = await User.findOne(userId);
+            const user = await User.findById(userId);
             if (!user) {
                 return res.status(StatusCodes.BAD_REQUEST).json({
                     message: "Không tìm thấy tài khoản này",
