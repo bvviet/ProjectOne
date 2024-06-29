@@ -6,6 +6,26 @@ import User from "../models/UserModel.js";
 import { registerValidator, loginValidator } from "../validations/auth.js";
 
 class AuthController {
+    async getDetailUser(req, res) {
+        try {
+            const userId = req.params.id;
+            const user = await User.findOne(userId);
+            if (!user) {
+                return res.status(StatusCodes.BAD_REQUEST).json({
+                    message: "Không tìm thấy tài khoản này",
+                });
+            }
+            res.status(StatusCodes.OK).json({
+                message: "Lấy thông tin người dùng thành công",
+                data: user,
+            });
+        } catch (error) {
+            res.status(StatusCodes.OK).json({
+                message: error,
+            });
+        }
+    }
+
     async register(req, res) {
         try {
             // Bước 1 validate email, pass, userName
