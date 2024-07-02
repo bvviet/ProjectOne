@@ -51,6 +51,7 @@ class ProductController {
             }
             res.status(StatusCodes.OK).json({
                 message: "Lấy thông tin sản phẩm thành công",
+                data: products,
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
