@@ -22,7 +22,7 @@ class ProductController {
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
@@ -36,17 +36,25 @@ class ProductController {
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
 
     async getDetail(req, res) {
         try {
-            res.send("Get Detail");
+            const products = await Product.findById(req.params.id);
+            if (!products) {
+                return res.status(404).json({
+                    message: "Không tìm thấy sản phẩm",
+                });
+            }
+            res.status(StatusCodes.OK).json({
+                message: "Lấy thông tin sản phẩm thành công",
+            });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
@@ -60,27 +68,45 @@ class ProductController {
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
 
     async updateProduct(req, res) {
         try {
-            res.send("Update Product");
+            const products = await Product.findByIdAndUpdate(req.params.id, req.body);
+            if (!products) {
+                return res.status(404).json({
+                    message: "Không tìm thấy sản phẩm",
+                });
+            }
+            res.status(StatusCodes.OK).json({
+                message: "Cập nhật thành công.",
+                data: products,
+            });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
 
     async deleteProduct(req, res) {
         try {
-            res.send("Delete Product");
+            const products = await Product.findByIdAndDelete(req.params.id, req.body);
+            if (!products) {
+                return res.status(404).json({
+                    message: "Không tìm thấy sản phẩm",
+                });
+            }
+            res.status(StatusCodes.OK).json({
+                message: "Xóa thành công.",
+                data: products,
+            });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
-                message: error,
+                message: error.message,
             });
         }
     }
