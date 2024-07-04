@@ -17,7 +17,7 @@ class AuthController {
             }
             res.status(StatusCodes.OK).json({
                 message: "Lấy thông tin người dùng thành công",
-                data: user,
+                data: { ...user.toObject(), password: undefined },
             });
         } catch (error) {
             res.status(StatusCodes.OK).json({
