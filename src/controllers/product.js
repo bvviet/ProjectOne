@@ -1,4 +1,5 @@
 import Product from "../models/ProductModel.js";
+import Order from "../models/order.js";
 import { StatusCodes } from "http-status-codes";
 
 class ProductController {
@@ -95,15 +96,24 @@ class ProductController {
 
     async deleteProduct(req, res) {
         try {
-            const products = await Product.findByIdAndDelete(req.params.id, req.body);
-            if (!products) {
-                return res.status(404).json({
-                    message: "Không tìm thấy sản phẩm",
+            const productId = req.params.id;
+
+            // Xóa sản phẩm từ bảng Product
+            const deletedProduct = await Product.findByIdAndDelete(productId);
+
+            if (!deletedProduct) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: "Không tìm thấy sản phẩm để xóa.",
                 });
             }
+
+            // Xóa sản phẩm khỏi các đơn hàng trong bảng Order
+            const deletedOrders = await Order.deleteMany({ productId: productId });
+
             res.status(StatusCodes.OK).json({
-                message: "Xóa thành công.",
-                data: products,
+                message: "Xóa sản phẩm thành công.",
+                deletedProduct,
+                deletedOrders,
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({

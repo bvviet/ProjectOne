@@ -6,6 +6,20 @@ import User from "../models/UserModel.js";
 import { registerValidator, loginValidator } from "../validations/auth.js";
 
 class AuthController {
+    async getAll(req, res) {
+        try {
+            const user = await User.find();
+            res.status(StatusCodes.OK).json({
+                message: "Lấy thông tin người dùng thành công",
+                data: user,
+            });
+        } catch (error) {
+            res.status(StatusCodes.OK).json({
+                message: error,
+            });
+        }
+    }
+
     async getDetailUser(req, res) {
         try {
             const userId = req.params.id;
