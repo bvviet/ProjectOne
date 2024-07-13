@@ -115,7 +115,7 @@ class OrderItemController {
                 });
             }
             res.status(StatusCodes.OK).json({
-                message: "Xóa đơn hàng và các sản phẩm thành công.",
+                message: "Xóa khỏi đơn hàng thành công.",
             });
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST).json({
