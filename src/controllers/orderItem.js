@@ -7,8 +7,15 @@ import { StatusCodes } from "http-status-codes";
 class OrderItemController {
     async addOrderItem(req, res) {
         const { productId, quantity } = req.body;
+        const userId = req.params.userId;
 
         try {
+            if (!userId) {
+                return res.status(StatusCodes.BAD_REQUEST).json({
+                    message: "Bạn cần đăng nhập để thêm vào giỏ hàng và đơn hàng.",
+                });
+            }
+
             // Bước 1: Lấy thông tin sản phẩm từ cơ sở dữ liệu
             const product = await Product.findById(productId);
             if (!product) {
