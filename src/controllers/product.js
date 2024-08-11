@@ -30,7 +30,7 @@ class ProductController {
 
     async getAll(req, res) {
         try {
-            const products = await Product.find();
+            const products = await Product.find().populate("category");
             res.status(StatusCodes.OK).json({
                 message: "Lấy dữ liệu thành công",
                 data: products,
@@ -44,7 +44,7 @@ class ProductController {
 
     async getDetail(req, res) {
         try {
-            const products = await Product.findById(req.params.id);
+            const products = await Product.findById(req.params.id).populate("category");
             if (!products) {
                 return res.status(404).json({
                     message: "Không tìm thấy sản phẩm",
@@ -52,6 +52,31 @@ class ProductController {
             }
             res.status(StatusCodes.OK).json({
                 message: "Lấy thông tin sản phẩm thành công",
+                data: products,
+            });
+        } catch (error) {
+            res.status(StatusCodes.BAD_REQUEST).json({
+                message: error.message,
+            });
+        }
+    }
+
+    // Get products with category
+    async getProductsByCategory(req, res) {
+        try {
+            const { categoryId } = req.params;
+
+            if (!categoryId) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: "Không tìm thấy danh mục này.",
+                });
+            }
+
+            // Tìm tất cả sản phẩm thuộc danh mục cụ thể
+            const products = await Product.find({ category: categoryId }).populate("category");
+
+            res.status(StatusCodes.OK).json({
+                message: "Lấy dữ liệu thành công",
                 data: products,
             });
         } catch (error) {

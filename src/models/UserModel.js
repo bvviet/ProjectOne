@@ -20,6 +20,12 @@ const UserSchema = new Schema(
         avatar: {
             type: String,
         },
+        address: {
+            type: String,
+        },
+        phone: {
+            type: String,
+        },
         role: {
             type: String,
             default: "member",

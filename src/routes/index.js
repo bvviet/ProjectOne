@@ -4,6 +4,7 @@ import productRouter from "./product.js";
 import commentRouter from "./comment.js";
 import orderRouter from "./order.js";
 import productLikeRouter from "./productLike.js";
+import categoriesRouter from "./category.js";
 
 const router = Router();
 
@@ -12,6 +13,7 @@ router.get("/", (req, res) => {
 });
 router.use("/auth", authRouter);
 router.use("/product", productRouter);
+router.use("/categories", categoriesRouter);
 router.use("/comment", commentRouter);
 router.use("/order", orderRouter);
 router.use("/favorite", productLikeRouter);

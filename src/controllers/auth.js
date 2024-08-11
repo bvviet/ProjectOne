@@ -109,6 +109,53 @@ class AuthController {
             console.log(error);
         }
     }
+
+    async updateProfile(req, res) {
+        const { userName, email, avatar, address, phone } = req.body;
+        const { userId } = req.params;
+
+        try {
+            const userExists = await User.findById(userId);
+            if (!userExists) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: "Không tồn tại tài khoản.",
+                });
+            }
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
+                { userName, email, avatar, address, phone },
+                { new: true }
+            );
+
+            res.status(StatusCodes.OK).json({
+                message: "Cập nhật thành công.",
+                user: updatedUser,
+            });
+        } catch (error) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: error.message,
+            });
+        }
+    }
+
+    async deleteUser(req, res) {
+        const { userId } = req.params;
+        try {
+            const user = await User.findByIdAndDelete({ _id: userId });
+            if (!user) {
+                return res.status(StatusCodes.NOT_FOUND).json({
+                    message: "Không tồn tại tài khoản.",
+                });
+            }
+            res.status(StatusCodes.OK).json({
+                message: "Xóa thành công.",
+            });
+        } catch (error) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: error.message,
+            });
+        }
+    }
 }
 
 export default new AuthController();
