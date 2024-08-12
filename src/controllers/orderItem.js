@@ -33,10 +33,6 @@ class OrderItemController {
                     order: [],
                     totalPrice: 0,
                     userId: req.params.userId,
-                    status: "cart",
-                    shipping: "",
-                    note: "",
-                    currency: "USD",
                 });
             }
 
