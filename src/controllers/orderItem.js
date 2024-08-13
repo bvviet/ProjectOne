@@ -94,6 +94,20 @@ class OrderItemController {
         }
     }
 
+    async getOderItemDetail(req, res) {
+        try {
+            const orderItem = await OrderItem.findById(req.params.id).populate("productId");
+            res.status(StatusCodes.OK).json({
+                message: "Get all",
+                data: orderItem,
+            });
+        } catch (error) {
+            res.status(StatusCodes.BAD_REQUEST).json({
+                message: error.message,
+            });
+        }
+    }
+
     async getOder(req, res) {
         try {
             const order = await Order.find({ userId: req.params.userId })

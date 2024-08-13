@@ -4,6 +4,7 @@ const orderRouter = Router();
 
 orderRouter.get("/", orderItemController.getOderItem);
 orderRouter.get("/orders/:userId", orderItemController.getOder);
+orderRouter.get("/:id", orderItemController.getOderItemDetail);
 orderRouter.post("/:userId", orderItemController.addOrderItem);
 orderRouter.delete("/:id", orderItemController.deleteOrder);
 
